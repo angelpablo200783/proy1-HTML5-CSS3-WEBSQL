@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tu Tienda en línea</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Bienvenido a tu tienda en línea</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="carrito.html">Carrito de Compras</a></li>
+                <li><a href="confirmar.html">Confirmar Compras</a></li>
+            </ul>
+        </nav>
+        <!-- Icono de la Cesta de Compras -->
+        <div id="icono-cesta" ondrop="drop(event)" ondragover="allowDrop(event)">
+            <img src="cesta.png" alt="Cesta de Compras" id="cesta-icon">
+            <div id="contenido-cesta"></div>
+            <div id="cesta-indicador">0</div>
+        </div>      
+    </header>
+
+    <main>
+        <section id="descripcion">
+            <h2>Descripción del Sitio</h2>
+            <p>Descubre nuestros productos exclusivos y las ofertas más atractivas. Arrastra los productos al carrito y disfruta de una compra fácil y rápida.</p>
+
+            <!-- Carousel de Productos -->
+            <div id="carousel">
+                <div class="carousel-item" data-video="https://www.youtube.com/embed/M1HKSDBHLFc?si=o1IyTp5QTD989KNn" draggable="true" 
+                ondragstart="drag(event)" data-producto='{"nombre": "MX Master 3S", "precio": "99.99", "imagen": "mx-master-3s.png"}'>
+                    <img src="mx-master-3s.png" alt="MX Master 3S">
+                    <div class="product-details">
+                        <h3>MX Master 3S</h3>
+                        <p> Éste es MX Master 3S, un emblemático mouse remasterizado.
+                            Siente cada momento de tu flujo de trabajo con más precisión, sensación táctil y desempeño, 
+                            gracias a los clicks discretos y un sensor de seguimiento sobre cristal13Grosor mínimo del 
+                            cristal: 4 mm. de 8.000 dpi.</p>
+                        <p><strong>Precio: $99.99</strong></p>
+                    </div>
+                </div>
+                <div class="carousel-item" data-video="https://www.youtube.com/embed/4Tb3SpOm7KI?si=LVf_jgleVzATyCcE" draggable="true" 
+                ondragstart="drag(event)" data-producto='{"nombre": "MX Keys S", "precio": "99.99", "imagen": "k950-graphite.png"}'>
+                    <img src="k950-graphite.png" alt="MX Keys S">
+                    <div class="product-details">
+                        <h3>MX Keys S</h3>
+                        <p> Experimente un nuevo nivel de estado de flujo con MX Keys S: un teclado de alto rendimiento, 
+                            diseñado para una escritura cómoda, rápida y fluida, con iluminación inteligente y teclas programables.</p>
+                        <p><strong>Precio: $99.99</strong></p>
+                    </div>                    
+                </div>
+                <div class="carousel-item" data-video="https://www.youtube.com/embed/O_c12WUNwlY?si=mtvKkTJHyCwTFiie" draggable="true" 
+                ondragstart="drag(event)" data-producto='{"nombre": "MX Keys Combo", "precio": "199.99", "imagen": "mx-keys-s-combo-keyboard.png"}'>
+                    <img src="mx-keys-s-combo-keyboard.png" alt="Producto 3">
+                    <div class="product-details">
+                        <h3>MX Keys Combo para Negocios</h3>
+                        <p> Ésta es la combinación MX Keys para empresa y MX Master 3 para empresa con reposamanos.
+                            Es una herramienta clave para la productividad, y los analistas, creadores y programadores 
+                            obtienen la eficacia requerida para sus procedimientos avanzados.</p>
+                        <p><strong>Precio: $199.99</strong></p>
+                    </div> 
+                </div>              
+            </div>
+
+            <!-- Video del Producto Seleccionado -->
+            <div id="video-container">
+                <iframe id="producto-video" width="600" height="320" src="" frameborder="0" allowfullscreen></iframe>
+            </div>
+        </section>      
+
+    </main>
+
+    <footer>
+        <p>© 2024 Tu Tienda - Todos los derechos reservados</p>
+        <p>Angel Pablo Alquijay Espinoza 0900 04 1934</p>
+    </footer>
+    <script>
+
+        let productosEnCesta = [];        
+
+        // Cargar productos de localStorage al cargar la página
+        window.onload = function() {
+            if (localStorage.getItem('productosEnCesta')) {
+                productosEnCesta = JSON.parse(localStorage.getItem('productosEnCesta'));
+                productosEnCesta.forEach(producto => agregarProductoACesta(producto));
+                actualizarTotalCesta();
+            }
+        };               
+
+        // Actualizar el indicador de la cesta
+        function actualizarIndicadorCesta() {
+            const productosEnCesta = JSON.parse(localStorage.getItem('productosEnCesta')) || [];
+            const cantidadProductos = productosEnCesta.reduce((total, producto) => total + producto.cantidad, 0);
+            const cestaIndicador = document.getElementById('cesta-indicador');
+            
+            if (cantidadProductos > 0) {
+                cestaIndicador.textContent = cantidadProductos;
+                cestaIndicador.style.display = 'block';
+            } else {
+                cestaIndicador.style.display = 'none';
+            }
+        }       
+        
+        // Llamar a la función al cargar la página
+        document.addEventListener('DOMContentLoaded', () => {
+            actualizarIndicadorCesta();
+        });        
+
+        // Función para cambiar el video de YouTube cuando se selecciona un producto
+        document.querySelectorAll('.carousel-item').forEach(item => {
+            item.addEventListener('click', function() {
+                const videoSrc = this.getAttribute('data-video');
+                const videoElement = document.querySelector('#producto-video');
+                videoElement.setAttribute('src', videoSrc);
+            });
+        });  
+
+        
+        function allowDrop(event) {
+            event.preventDefault();
+        }
+
+        function drag(event) {
+            const producto = event.target.closest('.carousel-item').getAttribute('data-producto');
+            event.dataTransfer.setData("producto", producto);
+        }
+
+        function drop(event) {
+            event.preventDefault();
+            const producto = JSON.parse(event.dataTransfer.getData("producto"));
+
+            // Verificar si el producto ya está en la cesta
+            const productoExistente = productosEnCesta.find(item => item.nombre === producto.nombre);
+            if (productoExistente) {
+                productoExistente.cantidad += 1; // Aumentar la cantidad si ya existe
+                productoExistente.total += parseFloat(producto.precio); // Aumentar el precio total
+                actualizarCantidadYCosto(productoExistente);
+            } else {
+                producto.cantidad = 1;
+                producto.total = parseFloat(producto.precio);
+                productosEnCesta.push(producto);
+                agregarProductoACesta(producto);
+            }
+            
+            // Guardar en localStorage
+            localStorage.setItem('productosEnCesta', JSON.stringify(productosEnCesta));            
+            actualizarIndicadorCesta();
+
+            // Actualizar el total final de la cesta
+            actualizarTotalCesta();            
+        }
+
+        function agregarProductoACesta(producto) {
+            const contenidoCesta = document.getElementById('contenido-cesta');
+
+            // Crear un nuevo elemento para el producto
+            const productDiv = document.createElement('div');
+            productDiv.className = 'producto-cesta';
+            productDiv.setAttribute('data-nombre', producto.nombre);
+            productDiv.innerHTML = `
+                <img src="${producto.imagen}" alt="${producto.nombre}">
+                <div class="product-details">
+                    <h3>${producto.nombre}</h3>
+                    <p><strong>Precio: $${parseFloat(producto.precio).toFixed(2)}</strong></p>
+                    <p id="cantidad-${producto.nombre}">Cantidad: ${producto.cantidad}</p>
+                    <p id="total-${producto.nombre}">Total: $${parseFloat(producto.total).toFixed(2)}</p>
+                </div>
+            `;
+
+            // Añadir el producto al contenido de la cesta
+            contenidoCesta.appendChild(productDiv);
+        }
+
+        function actualizarCantidadYCosto(producto) {
+            const cantidadElement = document.getElementById(`cantidad-${producto.nombre}`);
+            const totalElement = document.getElementById(`total-${producto.nombre}`);
+            cantidadElement.textContent = `Cantidad: ${producto.cantidad}`;
+            totalElement.textContent = `Total: $${parseFloat(producto.total).toFixed(2)}`;
+        }
+
+        function actualizarTotalCesta() {
+            const totalCesta = productosEnCesta.reduce((acc, producto) => acc + parseFloat(producto.total).toFixed(2), 0);
+            const totalCestaElement = document.getElementById('total-cesta');
+            totalCestaElement.innerHTML = `<strong>Total a Pagar: $${totalCesta}</strong>`;
+        }           
+        
+    </script>
+</body>
+</html>

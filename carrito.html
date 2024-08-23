@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrito de Compras</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <div id="location-info" class="location">        
+        <span style="color: white; font-weight: bold;">Pais de Compra: <span id="country-name"></span></span>
+        <img id="country-flag" src="" alt="Flag" />
+    </div>
+
+    <header>
+        <h1>Carrito de Compras</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="carrito.html">Carrito de Compras</a></li>
+                <li><a href="confirmar.html">Confirmar Compras</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="carrito-contenido">
+            <h2>Listado de tu Carrito</h2>            
+            <div id="productos-en-cesta"></div>
+            <div id="total-cesta">                
+            </div>
+            <!--<button class="confirm-button" id="confirmarCompra">Confirmar Compra</button>-->
+        </section>
+        
+    </main>    
+
+    <footer>
+        <p>© 2024 Tu Tienda - Todos los derechos reservados</p>
+        <p>Angel Pablo Alquijay Espinoza 0900 04 1934</p>
+    </footer>
+    <script>
+
+        document.addEventListener('DOMContentLoaded', () => {
+            fetch('http://www.geoplugin.net/json.gp')
+                .then(response => response.json())
+                .then(data => {
+                    const country = data.geoplugin_countryCode;
+                    const countryName = data.geoplugin_countryName;
+                    document.getElementById('country-name').textContent = countryName || 'País desconocido';
+                    document.getElementById('country-flag').src = `https://flagcdn.com/w320/${country.toLowerCase()}.png`;
+                })
+                .catch(error => console.error('Error al obtener la geolocalización:', error));
+        });
+
+        // Cargar productos desde localStorage al cargar la página
+        window.onload = function() {
+            const productosEnCesta = JSON.parse(localStorage.getItem('productosEnCesta')) || [];
+
+            const productosContenedor = document.getElementById('productos-en-cesta');
+            const totalCestaElement = document.getElementById('total-cesta');
+
+            if (productosEnCesta.length > 0) {
+                let totalGeneral = 0;
+
+                productosEnCesta.forEach(producto => {
+                    // Crear un contenedor para cada producto
+                    const productoDiv = document.createElement('div');
+                    productoDiv.className = 'producto-cesta';
+                    productoDiv.innerHTML = `                    
+                        <img src="${producto.imagen}" alt="${producto.nombre}" class="producto-imagen">
+                        <div class="product-details">
+                            <h3>${producto.nombre}</h3>
+                            <p>Precio: $${producto.precio}</p>
+                            <p>Cantidad: ${producto.cantidad}</p>
+                            <p>Total: $${producto.total}</p>
+                        </div>
+                    `;
+
+                    productosContenedor.appendChild(productoDiv);
+
+                    totalGeneral += producto.total;
+                });
+
+                // Mostrar el total general de la cesta
+                totalCestaElement.innerHTML = `<strong>Total a Pagar: $${parseFloat(totalGeneral).toFixed(2)}</strong>`;
+            } else {
+                productosContenedor.innerHTML = '<p>No hay productos en la cesta.</p>';
+            }
+        };              
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,480 @@
+/* Estilos Generales */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+header {
+    background-color: #2e455f;
+    color: #fff;
+    padding: 10px 0;
+    text-align: center;
+}
+
+header nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    text-align: center;
+}
+
+header nav ul li {
+    display: inline;
+    margin: 0 15px;
+}
+
+header nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+header nav ul li a:hover {
+    text-decoration: underline;
+}
+
+main {
+    padding: 70px;
+}
+
+footer {
+    background-color: #2e455f;
+    color: #fff;
+    text-align: center;
+    padding: 0px 0;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+}
+
+/* Estilos para Productos */
+.producto {
+    width: 30%;
+    margin: 10px;
+    cursor: pointer;
+}
+
+#productos {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+#total {
+    text-align: right;
+    margin-top: 20px;
+}
+
+/* Estilos Responsivos */
+@media (max-width: 768px) {
+    header nav ul li {
+        display: block;
+        margin: 10px 0;
+    }
+
+    .producto {
+        width: 100%;
+        margin: 10px 0;
+    }
+
+    #productos {
+        flex-direction: column;
+    }
+}
+
+/* Carousel */
+#carousel {
+    width:50%;
+    display: flex;
+    margin: 0 auto; 
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;    
+    -webkit-overflow-scrolling: touch;
+}
+
+.carousel-item {
+    flex: none;
+    scroll-snap-align: center;
+    margin: 0 10px;
+    cursor: pointer;
+}
+
+.carousel-item img {
+    width: 300px;
+    height: auto;
+    border-radius: 10px;
+    transition: transform 0.3s ease-in-out;
+}
+
+.carousel-item img:hover {
+    transform: scale(1.40);
+}
+
+/* Video Container */
+#video-container {
+    margin-top: 20px;
+    text-align: center;
+}
+
+#producto-video {
+    width: 100%;
+    max-width: 600px;
+    border-radius: 10px;
+}
+
+/* Estilos Responsivos */
+@media (max-width: 768px) {
+    #carousel {
+        flex-direction: column;
+    }
+
+    .carousel-item img {
+        width: 100%;
+    }
+}
+
+/* Estilo para los elementos del carousel */
+#carousel {
+    display: flex;
+    overflow-x: auto;
+    gap: 20px;
+}
+
+.carousel-item {
+    border: 1px solid #ccc;
+    padding: 10px;
+    background-color: #f9f9f9;
+    width: 200px;
+    cursor: pointer;
+    text-align: center;
+}
+
+.carousel-item img {
+    max-width: 100%;
+    height: auto;
+}
+
+.product-details h3 {
+    font-size: 1.2em;
+    margin: 10px 0;
+}
+
+.product-details p {
+    margin: 5px 0;
+}
+
+.product-details strong {
+    color: #d9534f;
+    font-size: 1.1em;
+}
+
+/* Icono de la cesta de compras */
+#icono-cesta {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 50px;
+    cursor: pointer;
+}
+
+#icono-cesta img {
+    width: 100%;
+    height: auto;
+}
+
+#contenido-cesta {
+    display: none;
+    position: absolute;
+    top: 60px;
+    right: 0;
+    background-color: #3d3d3d;
+    border: 1px solid #ddd;
+    padding: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    width: 300px;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+#icono-cesta:hover #contenido-cesta {
+    display: block;
+}
+
+/* Total de la cesta */
+#total-cesta {
+    font-weight: bold;
+    padding: 10px;
+    /*border-top: 1px solid #333232;*/
+    background-color: #f4f4f4;
+    /*position: absolute;*/
+    /*bottom: 0;*/
+    margin-bottom: 20px;
+    right: 0;
+    /*width: 100%;*/
+    /*text-align: right;*/
+    box-shadow: 0 -5px 10px rgba(0,0,0,0.1);
+}
+
+/* Estilos para los productos en la cesta */
+#contenido-cesta .producto-cesta {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+    padding: 10px 0;
+}
+
+#contenido-cesta img {
+    width: 100px;
+    height: auto;
+    margin-right: 10px;
+}
+
+.product-details {
+    flex: 1;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    #icono-cesta {
+        width: 40px;
+        top: 10px;
+        right: 10px;
+    }
+
+    #contenido-cesta {
+        width: 90%;
+    }
+
+    #contenido-cesta .producto-cesta {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    #contenido-cesta img {
+        margin-bottom: 10px;
+    }
+
+    /*#total-cesta {
+        padding: 5px;
+    }*/
+}
+
+#carrito-contenido {
+    max-width: 1200px;
+    margin: auto;
+}
+
+.producto-cesta {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 15px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.producto-cesta img {
+    width: 100px;
+    height: auto;
+}
+
+.product-details {
+    flex: 1;
+}
+
+#total-cesta {
+    /*margin-top: 100px;*/
+    font-weight: bold;
+}
+
+.confirm-button {
+    background-color: #28a745;
+    color: white;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    width: 100%;
+    max-width: 300px;
+    margin: 20px auto;
+    display: block;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.confirm-button:hover {
+    background-color: #218838;
+    transform: translateY(-2px);
+}
+
+.confirm-button:active {
+    background-color: #1e7e34;
+    transform: translateY(0);
+}
+
+.location {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: flex;
+    align-items: center;
+}
+
+#country-name {
+    color: white;
+    margin-right: 10px;
+    font-size: 18px;
+    font-weight: bold; 
+}
+
+#country-flag {
+    width: 32px;
+    height: 20px;
+    border: 1px solid #ccc;
+}
+
+.eliminar-btn {
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.cantidad-input {
+    width: 60px;
+    padding: 5px;
+    text-align: center;
+    margin-left: 10px;
+}
+
+.producto-imagen:hover {
+    transform: scale(2.5); /* Aumenta el tamaño de la imagen al pasar el puntero */
+}
+
+/* Estilos para la ventana modal */
+.modal {
+    display: none; /* Inicialmente oculta */
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.3);
+    transition: opacity 0.3s ease;
+    opacity: 0;
+}
+
+.modal.show {
+    display: block; /* Muestra el modal */
+    opacity: 1;
+}
+
+.modal-content {
+    background-color: #fff;
+    margin: 10% auto;
+    padding: 20px;
+    border-radius: 8px;
+    width: 80%;
+    max-width: 500px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease;
+    transform: translateY(-30px);
+}
+
+.modal.show .modal-content {
+    transform: translateY(0);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 10px;
+}
+
+.modal-header h2 {
+    margin: 0;
+}
+
+.close {
+    color: #333;
+    font-size: 24px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+}
+
+.close:hover {
+    color: #000;
+}
+
+.modal-footer {
+    margin-top: 20px;
+    text-align: right;
+}
+
+.modal-footer button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+    margin-left: 10px;
+}
+
+.modal-footer button:hover {
+    background-color: #0056b3;
+}
+
+.modal-footer button.cancel {
+    background-color: #6c757d;
+}
+
+.modal-footer button.cancel:hover {
+    background-color: #5a6268;
+}
+
+/* Estilos para el icono de la cesta de compras */
+#cesta-icono {
+    position: relative;
+    display: inline-block;
+}
+
+#cesta-icono img {
+    width: 50px; /* Ajusta el tamaño según sea necesario */
+    height: auto;
+}
+
+#cesta-indicador {
+    position: absolute;
+    top: -10px; /* Ajusta la posición vertical del indicador */
+    right: -10px; /* Ajusta la posición horizontal del indicador */
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /*font-size: 12px;*/
+    font-weight: bold;
+    display: none; /* Ocultar por defecto */
+}
